@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tidewater Example</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+    <style>
+        :root {
+            --cyan-50:  #ECFEFF;
+            --cyan-100: #CFFAFE;
+            --cyan-200: #A5F3FC;
+            --cyan-300: #67E8F9;
+            --cyan-400: #22D3EE;
+            --cyan-500: #06B6D4;
+            --cyan-600: #0891B2;
+            --cyan-700: #0E7490;
+            --cyan-800: #155E75;
+            --cyan-900: #164E63;
+            --cyan-950: #083344;
+
+            --primary: var(--cyan-700);
+            --primary-hover: var(--cyan-800);
+            --focus-ring: var(--cyan-600);
+
+            --ground: #F7FBFC;
+            --surface: #FFFFFF;
+            --border: #D5E4E8;
+            --muted: #4A6670;
+            --ink: #0B2530;
+
+            --positive: #15803D;
+            --caution: #B45309;
+            --critical: #B91C1C;
+            --positive-tint: #DCFCE7;
+            --caution-tint: #FEF3C7;
+            --critical-tint: #FEE2E2;
+            --idle-tint: #E6EFF2;
+
+            --font-display: "Sora", system-ui, sans-serif;
+            --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+            --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+            --space-4: 4px;   --space-8: 8px;   --space-12: 12px; --space-16: 16px;
+            --space-24: 24px; --space-32: 32px; --space-48: 48px; --space-64: 64px;
+
+            --radius-input: 6px;
+            --radius-card: 12px;
+            --radius-pill: 999px;
+            --shadow-raised: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--ground);
+            color: var(--ink);
+            font-family: var(--font-sans);
+            padding: var(--space-32);
+            line-height: 1.5;
+        }
+
+        .container { max-width: 1376px; margin: 0 auto; }
+
+        h1, h2, .card-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        p { color: var(--muted); font-size: 0.95rem; margin-bottom: var(--space-12); }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: var(--space-24);
+            margin-bottom: var(--space-16);
+            box-shadow: var(--shadow-raised);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-8);
+        }
+
+        .grid-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-16);
+            margin-bottom: var(--space-32);
+        }
+
+        .tile {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: var(--space-16);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-success { background: var(--positive-tint); color: var(--positive); }
+        .status-warning { background: var(--caution-tint); color: var(--caution); }
+        .status-error { background: var(--critical-tint); color: var(--critical); }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-input);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+        }
+
+        button:focus {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        input {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-input);
+            padding: var(--space-12);
+            margin-bottom: var(--space-12);
+            font-family: inherit;
+        }
+
+        .mono-label {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tidewater Dashboard</h1>
+            <p>Welcome back. Here is the current system overview.</p>
+        </header>
+
+        <div class="grid-tiles">
+            <div class="tile">
+                <div class="mono-label">Active Users</div>
+                <div style="font-size: 2rem; font-weight: 700;">1,240</div>
+                <span class="status status-success">Healthy</span>
+            </div>
+            <div class="tile">
+                <div class="mono-label">Server Load</div>
+                <div style="font-size: 2rem; font-weight: 700;">42%</div>
+                <span class="status status-success">Healthy</span>
+            </div>
+            <div class="tile">
+                <div class="mono-label">Failed Tasks</div>
+                <div style="font-size: 2rem; font-weight: 700;">3</div>
+                <span class="status status-warning">Warning</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">Quick Actions</h2>
+            <p>Perform standard maintenance operations or create new resources quickly.</p>
+            <input type="text" placeholder="Enter resource name..." style="width: 100%;">
+            <button>Create Resource</button>
+        </div>
+    </div>
+</body>
+</html>

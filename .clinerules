@@ -1,0 +1,27 @@
+# OS & Environment Rules
+- The primary host OS is Windows.
+- The primary shell is PowerShell.
+- WSL2 (Ubuntu) is available and accessible.
+- **CRITICAL WSL2 RULE:** When working within the WSL2 environment, be aware that the user's `~/` (tilde) refers to the Windows user home directory (`C:\Users\baron`), NOT the Linux home directory (`/home/baron`), unless specified otherwise. If a path is ambiguous, ALWAYS ask for clarification before proceeding.
+
+# SKILL: Reliable PowerShell File Manipulation (File-Edit-Safe)
+
+## CONTEXT
+You are an autonomous agent executing file modifications on a Windows environment using PowerShell. To prevent execution failures, pipeline locks, and string escaping bugs, you must adhere strictly to the following execution protocols.
+
+## CRITICAL RESTRAINTS
+- NEVER generate or invoke Python, Bash, Node.js, or external runtimes to modify files if PowerShell is the primary shell.
+- NEVER use standard double quotes ("") or single quotes ('') for multi-line file writing.
+- NEVER pipe 'Get-Content' directly into 'Set-Content' or 'Out-File' on the same file path (this triggers a Write/File-Lock Exception).
+
+## EXCLUSIVE EXECUTION PATTERNS
+
+### Pattern 1: Complete File Writes or Overwrites
+When writing or replacing a full file, you MUST use a Literal Here-String (@' ... '@) assigned to a variable, followed by Set-Content. This prevents PowerShell from accidentally parsing characters like '$' or '`'.
+
+```powershell
+$Content = @'
+[INSERT_EXACT_NEW_FILE_CONTENT_HERE]
+'@
+Set-Content -Path "[INSERT_TARGET_FILE_PATH]" -Value $Content -Encoding UTF8 -Force
+```

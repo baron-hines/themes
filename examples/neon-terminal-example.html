@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Terminal Example</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <style>
+        :root {
+            --void: #05080A;
+            --panel: #0B1216;
+            --line: #1B3A45;
+            --dim: #6FA3AD;
+            --text: #C7F9FF;
+            --cyan: #00F0FF;
+            --cyan-core: #B8FBFF;
+            --cyan-hover: #00B8C9;
+            --magenta: #FF2BD6;
+            --green: #39FF88;
+            --acid: #FCEE0A;
+            --red: #FF3B5C;
+            --font-display: "Chakra Petch", system-ui, sans-serif;
+            --font-mono: "JetBrains Mono", ui-monospace, monospace;
+            --space-8: 8px;   --space-12: 12px; --space-16: 16px; --space-24: 24px;
+            --space-32: 32px; --space-48: 48px; --space-64: 64px;
+            --glow-cyan: 0 0 24px rgba(0, 240, 255, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--void);
+            color: var(--text);
+            font-family: var(--font-mono);
+            padding: var(--space-32);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(0deg, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.25) 51%, rgba(18, 16, 16, 0) 52%);
+            background-size: 100% 4px;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        .container { max-width: 1376px; margin: 0 auto; }
+
+        h1, h2, button, .tag { font-family: var(--font-display); text-transform: uppercase; }
+
+        p { color: var(--dim); font-size: 0.9rem; }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            border-radius: 0 !important;
+        }
+
+        .grid-tiles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .tile {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            padding: var(--space-16);
+            border-radius: 0 !important;
+        }
+
+        .tile h3 { color: var(--cyan); font-size: 1.1rem; margin-bottom: var(--space-8); }
+
+        .status-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border: 1px solid;
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+
+        .status-ok { border-color: var(--green); color: var(--green); }
+        .status-fail { border-color: var(--red); color: var(--red); }
+
+        button {
+            background: var(--cyan);
+            color: var(--void);
+            border: none;
+            padding: var(--space-12) var(--space-24);
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 0 !important;
+            box-shadow: var(--glow-cyan);
+            transition: background 0.2s;
+            min-height: 44px;
+        }
+
+        button:hover { background: var(--cyan-core); }
+
+        button:focus { outline: 2px solid var(--acid); outline-offset: 2px; }
+
+        input {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            color: var(--text);
+            padding: var(--space-12);
+            font-family: var(--font-mono);
+            border-radius: 0 !important;
+            margin-bottom: var(--space-12);
+        }
+
+        .prompt { color: var(--green); margin-bottom: var(--space-8); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Neon Terminal // System Monitor</h1>
+            <p>// Status: Connected to cluster-01</p>
+        </header>
+
+        <div class="panel">
+            <div class="prompt">user@host:~$ init --scan</div>
+            <p>[OK] Initializing local protocols...</p>
+            <p>[OK] Establishing encrypted link...</p>
+            <p style="color: var(--red);">[FAIL] Warning: Segment 0x442 failed to load.</p>
+        </div>
+
+        <h2>Active Queues</h2>
+        <div class="grid-tiles">
+            <div class="tile">
+                <h3>Invoices</h3>
+                <p>1,204 pending items</p>
+                <span class="status-tag status-ok">[OK]</span>
+            </div>
+            <div class="tile">
+                <h3>Logs</h3>
+                <p>45.2 GB analyzed</p>
+                <span class="status-tag status-ok">[OK]</span>
+            </div>
+            <div class="tile">
+                <h3>Alerts</h3>
+                <p>3 critical errors</p>
+                <span class="status-tag status-fail">[FAIL]</span>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-top: var(--space-32);">
+            <label for="query">Input Command</label><br>
+            <input type="text" id="query" placeholder="Enter command..." style="width: 100%;">
+            <button>Execute Task</button>
+        </div>
+    </div>
+</body>
+</html>
