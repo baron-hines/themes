@@ -18,6 +18,8 @@ Most of these came from [baron-hines.github.io](https://baron-hines.github.io/),
 - [ ] **A reading layout for Tidewater too.** Its layout rules only cover the 1376px dashboard container. A reading column (about 70 characters, IBM Plex Sans at 16/25) would match Neon Terminal's `.reading`.
 - [ ] **Bar charts.** The chart rules cover lines and fills only. Proposed: bars use the line color at 15% (Neon Terminal) or 12% (Tidewater) fill with a solid 1.5px outline, and the one bar that matters (a winner, a current value) may be solid.
 
+- [ ] **Tags stretch inside table rows.** In both guides' table pattern, the status tag is a direct child of a `.row` grid, so the grid stretches it across its whole cell (a long outlined `[OK]` box in Neon Terminal, a long pill in Tidewater). Proposed: add `justify-self: start` to `.tag`. Found by rendering the guides' own markup on [the themes pages](https://baron-hines.github.io/projects/themes/).
+
 ### Neon Terminal
 
 - [ ] **Plain tags are `--dim`.** A topic tag like `[litellm]` in a cyan shade looks like a link. Status tags keep their signal colors. A tag that is a link may be cyan.
