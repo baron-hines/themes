@@ -6,7 +6,7 @@ Follow it literally. Copy the CSS and markup from this file. Do not choose color
 
 ## Key points
 
-- The page is near-black. One hot cyan, `#00F0FF` (called `--cyan`), marks everything interactive.
+- The page is near-black. One hot cyan, `#00F0FF` (called `--cyan`), marks everything interactive. The only thing in cyan that you can't click is the page title.
 - Copy the CSS blocks below into the project unchanged. Every color, size and effect you need is already in them.
 - Neon colors are for signals only. Never set a paragraph of normal text in a neon color. Normal text is `--text` or `--dim`.
 - Everything is square. Do not use rounded corners anywhere.
@@ -36,8 +36,10 @@ Add this to the page head. Both fonts are free Google Fonts.
 
 | Font | Used for |
 | --- | --- |
-| Chakra Petch | Page titles, headings, panel titles, buttons. Always uppercase. |
+| Chakra Petch | Page titles, headings, panel titles, buttons. Uppercase, except names and code (see Writing the words). |
 | JetBrains Mono | Everything else, including body text, inputs, tables and labels |
+
+Long text in JetBrains Mono gets tiring, so pages people read (articles, docs, write-ups) follow the reading rules under Layout rules.
 
 ## Tokens
 
@@ -53,7 +55,7 @@ Paste this at the top of the global stylesheet.
   --text: #C7F9FF;     /* main text */
 
   /* Cyan, the action color, in five strengths */
-  --cyan: #00F0FF;         /* buttons, focus borders, headings, links */
+  --cyan: #00F0FF;         /* buttons, links, focus borders, the page title */
   --cyan-core: #B8FBFF;    /* hover fill on primary buttons */
   --cyan-hover: #00B8C9;   /* hover on outlined actions */
   --cyan-idle: #007884;    /* decoration only, never text */
@@ -88,8 +90,10 @@ Paste this at the top of the global stylesheet.
 | Window, card, input background | `--panel` |
 | Borders, dividers, window title bars | `--line` |
 | Normal text | `--text` |
+| Section headings (`h2`, `h3`), card and panel titles | `--text` |
 | Secondary text, timestamps, helper text | `--dim` |
-| Primary button, page title, focus border, link | `--cyan` |
+| Primary button, link, focus border | `--cyan` |
+| Page title (`h1`, one per screen) | `--cyan`, with its glow |
 | Hovered or selected table row | `--cyan-tint` background |
 | Section label such as `// alerts` | `--dim` normally, `--magenta` for one accent per screen |
 | Success, online, shell prompt `$` | `--green` |
@@ -114,9 +118,16 @@ body {
 }
 h1, h2, h3 { margin: 0; font-family: var(--font-display); text-transform: uppercase; }
 h1 { font-size: 40px; line-height: 44px; font-weight: 700; letter-spacing: 0.02em; color: var(--cyan); text-shadow: 0 0 18px rgba(0,240,255,0.5); }
-h2 { font-size: 26px; line-height: 31px; font-weight: 600; }
-h3 { font-size: 18px; line-height: 23px; font-weight: 600; }
+h2 { font-size: 26px; line-height: 31px; font-weight: 600; color: var(--text); }
+h3 { font-size: 18px; line-height: 23px; font-weight: 600; color: var(--text); }
+/* Names and code keep their case inside uppercase text. */
+.keep-case, h1 code, h2 code, h3 code, .btn code { text-transform: none; }
 a { color: var(--cyan); text-decoration: none; }
+
+/* Reading pages: articles, docs, write-ups. Narrower lines and more leading for long mono text. */
+.reading { max-width: 68ch; margin: 0 auto; }
+.reading p, .reading li, .reading blockquote { line-height: 26px; }
+.reading p + p { margin-top: 16px; }
 .small { font-size: 13px; line-height: 20px; color: var(--dim); }
 .label { font-size: 12px; line-height: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
 :focus-visible { outline: 2px solid var(--acid); outline-offset: 3px; }
@@ -234,6 +245,7 @@ If a table can be wider than the screen, put it in a wrapper with `overflow-x: a
 ## Writing the words
 
 - Page titles, headings, panel titles and buttons are uppercase. The CSS does this, so write them normally.
+- Names written in lowercase (commands, packages, repos, products such as `kiosk`) and code keep their case. Uppercasing them changes the name. Wrap them in `<code>`, or in `<span class="keep-case">` when they aren't code.
 - Small section labels start with two slashes, for example `// jobs waiting`.
 - Status words are uppercase inside square brackets, such as `[OK]`, `[WARN]`, `[FAILING]`, `[STALLED]`, `[IDLE]`.
 - Log lines use lowercase levels in brackets, such as `[ok]`, `[warn]`, `[err]`. Color the bracket, not the whole line.
@@ -250,6 +262,15 @@ If a table can be wider than the screen, put it in a wrapper with `overflow-x: a
 - Anything clickable is at least 44px tall.
 - On phones everything stacks to one column. Tables scroll sideways inside their own wrapper. The page never scrolls sideways.
 
+### Reading pages
+
+The rules above are for dashboards and tools. A page that is mostly text, such as an article, a doc or a project write-up, uses these instead.
+
+- Put the text in `.reading`: a centered column at most 68 characters wide (`68ch`). Long lines of monospace are hard to follow back to the next line.
+- Paragraphs, list items and quotes get a 26px line height instead of 24px.
+- Body text stays JetBrains Mono at 15px in `--text`. The page title is the only cyan heading. Section headings are `--text`.
+- Tables and code blocks inside a reading page may use the full width of the column and scroll sideways inside their own wrapper.
+
 ## Charts
 
 - A line is `--cyan` for normal, `--acid` for warning, `--red` for error, `--dim` for idle. Stroke width is 1.5 to 2.
@@ -260,7 +281,9 @@ If a table can be wider than the screen, put it in a wrapper with `overflow-x: a
 ## Do not
 
 - Do not use rounded corners. Not on buttons, inputs, tags, cards or images.
-- Do not put body text in `--cyan`, `--magenta`, `--green`, `--acid` or `--red`. Use them for titles, labels, tags and short values only.
+- Do not put body text in `--cyan`, `--magenta`, `--green`, `--acid` or `--red`. Use them for the page title, labels, tags and short values only.
+- Do not color section headings or card titles `--cyan`. Cyan says "you can click this", and a cyan heading that isn't a link breaks that.
+- Do not uppercase a lowercase name or code. Wrap it in `<code>` or `.keep-case`.
 - Do not use more than one glowing element per region of the screen. Glow means "look here".
 - Do not put the scanline background on cards or panels. It belongs to the page background only.
 - Do not use `--dim` text on a `--line` background. Use `--text` there, such as in window title bars.
@@ -281,6 +304,9 @@ Answer each question. If any answer is no, fix it first.
 - [ ] Is the main button `--cyan` with `--void` text, uppercase, 44px tall, with cut corners?
 - [ ] Does every status tag contain a bracketed word?
 - [ ] Is all normal text `--text` or `--dim`?
+- [ ] Is the page title the only cyan heading, and is every other cyan thing clickable or a focus outline?
+- [ ] Do lowercase names and code keep their case in headings and buttons?
+- [ ] On a page that is mostly text, is the text in a `.reading` column no wider than `68ch`?
 - [ ] Can you reach every button, link and input with the Tab key and see the yellow focus outline?
 - [ ] Does every input have a visible label?
 - [ ] At 400px wide, does the page stack to one column with no sideways page scroll?
