@@ -1,42 +1,30 @@
-# Theme Library
+# Themes
 
-This repository contains instructions and components for two distinct user interface themes: **Neon Terminal** and **Tidewater**. These themes can be applied to any project to provide a consistent look and feel.
+Two design systems, kept as plain files so people and AI agents can apply them the same way every time:
 
-## Themes
+| Theme | Mode | In one line |
+|---|---|---|
+| [Neon Terminal](neon-terminal/) | Dark | Signal in the dark: near-black, one hot cyan for action, neon only where it means something. |
+| [Tidewater](tidewater/) | Light | Cyan, then quiet: one calm hue for every action, cool neutrals, nothing extra. |
 
-### 1. Neon Terminal
-A dark, cyberpunk-inspired theme that mimics a command-line interface. It uses sharp corners, glowing accents, and a strict monochrome-plus-cyan color palette.
+Each one is complete on its own and has only its own mode. Together they make a light/dark pair: [baron-hines.github.io](https://baron-hines.github.io/) uses Tidewater in light mode and Neon Terminal in dark mode, and so does the home server's Forgejo.
 
-- **Best for:** Developer tools, system monitors, and high-tech dashboards.
-- **Key Features:**
-    - Dark mode only.
-    - Square corners (no rounding).
-    - Bracketed status indicators (e.g., `[OK]`).
-    - Uppercase headings and buttons.
-    - Scanline effects.
+## What a theme covers
 
-### 2. Tidewater
-A calm, professional light theme built around a single brand cyan. It focuses on readability, soft rounded corners, and a clean aesthetic.
+- **Tokens:** every color, font, space step, radius, shadow or glow, as CSS custom properties.
+- **Components:** buttons, form fields, status tags, cards or windows, alerts, big-number tiles, table rows, the top bar and navigation, as CSS to paste in.
+- **Markup patterns:** the HTML that goes with the components.
+- **Rules:** which color for which job, how to write labels, buttons and errors, layout, charts, a "do not" list, and a checklist to run before calling a screen done.
 
-- **Best for:** SaaS products, business dashboards, and internal tools.
-- **Key Features:**
-    - Light mode only.
-    - Rounded corners (12px for cards, 6px for buttons/inputs).
-    - Sentence case text.
-    - Word-based status indicators (e.g., "Healthy").
-    - Clean, modern typography using Sora and IBM Plex Sans.
+## What's in each folder
 
-## Usage
+| File | For |
+|---|---|
+| `README.md` | People: the design philosophy and foundations. |
+| `THEME.md` | Building: tokens, components, markup and rules, written to be followed literally by a person or an AI agent. |
 
-To apply a theme, follow the instructions provided in the respective theme folder:
-- `neon-terminal/THEME.md`
-- `tidewater/THEME.md`
+[`examples/`](examples/) has a sample page per theme, and the [themes pages on baron-hines.github.io](https://baron-hines.github.io/projects/themes/) render every token and component live, straight from these files.
 
-Each folder contains the necessary CSS tokens, font links, and component patterns required to implement the theme accurately.
+## Changing a theme
 
-## Examples
-
-The `examples/` folder contains sample pages demonstrating each theme.
-
-- `examples/neon-terminal-example.html`
-- `examples/tidewater-example.html`
+Ideas from using the themes go in [PROPOSALS.md](PROPOSALS.md) first. An accepted proposal is written into that theme's `THEME.md` (and `README.md` if it changes the philosophy), so `THEME.md` stays the single source a build follows.
